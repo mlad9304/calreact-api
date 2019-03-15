@@ -1,18 +1,15 @@
 class ApplicationController < ActionController::API
 
     def index
-        @appointments = current_user.appointments.order('appt_time ASC')
-        @appointment = current_user.appointments.new
+        @appointments = Appointments.order('appt_time ASC')
+        @appointment = Appointments.new
 
         render json: @appointments
     end
 
     def show
-        @appointment = current_user.appointments.find(params[:id])
-        respond_to do |format|
-            format.html { render :index }
-            format.json { render json: @appointment }
-        end
+        @appointment = Appointments.find(params[:id])
+        render json: @appointment
     end
 
     def edit
@@ -20,7 +17,7 @@ class ApplicationController < ActionController::API
     end
 
     def update
-        @appointment = current_user.appointments.find(params[:id])
+        @appointment = Appointments.find(params[:id])
         if @appointment.update(appointment_params)
             render json: @appointment
         else
@@ -29,7 +26,7 @@ class ApplicationController < ActionController::API
     end
 
     def create
-        @appointment = current_user.appointments.create(appointment_params)
+        @appointment = Appointments.create(appointment_params)
         if @appointment.save
             render json: @appointment
         else
@@ -38,7 +35,7 @@ class ApplicationController < ActionController::API
     end
 
     def destroy
-        @appointment = current_user.appointments.find(params[:id])
+        @appointment = Appointments.find(params[:id])
         if @appointment.destroy
             head :no_content, status: :ok
         else
