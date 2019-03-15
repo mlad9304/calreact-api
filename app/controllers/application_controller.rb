@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include DeviseTokenAuth::Concerns::SetUserByToken
 
     def index
         @appointments = Appointments.order('appt_time ASC')
